@@ -39,15 +39,41 @@ def choose_view(page: Page):
         finally:
             change_all_button(False)
 
+    # 弹出对话框
+    def open_dlg(dlg):
+        page.dialog = dlg
+        dlg.open = True
+        page.update()
+
+    # 关闭对话框
+    def close_dlg(e):
+        if page.dialog:
+            page.dialog.open = False
+            page.update()
+
     def angle(_e):
         show_snack_bar(page, "开始校准，请切换回游戏（¬､¬）", ft.colors.GREEN)
         res = run(align_angle)
         if res == 1:
             show_snack_bar(page, "校准成功（＾∀＾●）", ft.colors.GREEN)
+            page.first = 0  # 不再弹出校准提示
         else:
             show_snack_bar(page, "校准失败（⊙.⊙）", ft.colors.RED)
 
     def start(_e):
+        # 若首次运行且为设置校准值，提示需要校准
+        if config.angle == '1.0' and page.first == 1:
+            dlg = ft.AlertDialog(
+                modal=True,
+                title=ft.Text('需要校准'),
+                content=ft.Text('在首次运行前，推荐先进行校准操作'),
+                actions=[
+                    ft.TextButton('确认', on_click=close_dlg)
+                ]
+            )
+            open_dlg(dlg)
+            page.first = 0
+            return
         show_snack_bar(page, "开始运行，请切换回游戏（＾∀＾●）", ft.colors.GREEN)
         tm = time.time()
         page.su = run(
@@ -57,7 +83,7 @@ def choose_view(page: Page):
             int(config.show_map_mode),
             int(config.speed_mode),
             int(config.slow_mode),
-            unlock = True,
+            unlock=True,
             bonus=config.bonus,
             gui=1,
         )
@@ -153,7 +179,7 @@ def choose_view(page: Page):
                         ),
                         ft.Container(
                             content=ft.Text(
-                                version+' by Dra-kt (Origin from CHNZYX)',
+                                version + ' by Dra-kt (Origin from CHNZYX)',
                                 size=20,
                             ),
                         ),
@@ -242,7 +268,8 @@ def choose_view(page: Page):
                     [
                         ft.Container(width=315),
                         ft.Switch(
-                            label="沉浸奖励", on_change=bonus_changed, value=config.bonus, label_position='left', scale=1.2
+                            label="沉浸奖励", on_change=bonus_changed, value=config.bonus, label_position='left',
+                            scale=1.2
                         ),
                     ]
                 ),
