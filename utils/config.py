@@ -58,7 +58,6 @@ class Config:
                     self.angle = str(config['angle'])
                     self.difficult = config['difficulty']
                     self.fate = config['fate']
-                    self.map_sha = config['map_sha']
                     self.show_map_mode = config['show_map_mode']
                     self.debug_mode = config['debug_mode']
                     self.speed_mode = config['speed_mode']
@@ -127,12 +126,11 @@ class Config:
                     "difficulty": self.diffi,
                     "fate": self.fate,
                     "secondary_fate": secondary_fate,
-                    "map_sha": self.map_sha,
                     "show_map_mode": self.show_map_mode,
                     "debug_mode": self.debug_mode,
                     "speed_mode": self.speed_mode,
                     "slow_mode": self.slow_mode,
-                    "check_mode": self.check_update,
+                    "check_update": self.check_update,
                     "timezone": self.timezone
                 },
                 "prior": prior,
