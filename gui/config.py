@@ -29,6 +29,9 @@ def config_view(page: Page):
     def slow_checkbox_changed(_e):
         config.slow_mode = not config.slow_mode
 
+    def update_checkbox_changed(_e):  # 是否自动检查更新
+        config.check_update = not config.check_update
+
     def difficult_changed(e: ControlEvent):
         config.difficult = e.data
 
@@ -147,6 +150,13 @@ def config_view(page: Page):
                                             label_position='left',
                                             scale=1.2
                                         ),
+                                        ft.Switch(
+                                            label="自动检查更新",
+                                            value=get_info_mode(config.check_update),
+                                            on_change=update_checkbox_changed,
+                                            label_position='left',
+                                            scale=1.2
+                                        )
                                     ]
                                 ),
                                 ft.Container(height=20),

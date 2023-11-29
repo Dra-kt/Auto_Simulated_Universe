@@ -26,6 +26,7 @@ config:
   debug_mode: 0
   speed_mode: 0
   slow_mode: 0
+  check_update: 0
   timezone: Default
 #奇物，事件和祝福的优先级。祝福优先级只对主命途生效
 #不要擅自更改每一部分之间的顺序

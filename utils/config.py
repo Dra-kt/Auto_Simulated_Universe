@@ -23,6 +23,7 @@ class Config:
         self.slow_mode = 0
         self.unlock = 0
         self.bonus = 0
+        self.check_update = 0
         self.timezones = ['America', 'Asia', 'Europe', 'Default']
         self.timezone = 'Default'
         self.origin_key = ['f','m','shift','v','e','w','a','s','d','1','2','3','4']
@@ -63,6 +64,7 @@ class Config:
                     self.speed_mode = config['speed_mode']
                     self.timezone = config['timezone']
                     self.slow_mode = config['slow_mode']
+                    self.check_update = config['check_update']
                 except:
                     pass
             with open(os.path.join(self.abspath, self.text), "r", encoding="utf-8", errors='ignore') as f:
@@ -130,6 +132,7 @@ class Config:
                     "debug_mode": self.debug_mode,
                     "speed_mode": self.speed_mode,
                     "slow_mode": self.slow_mode,
+                    "check_mode": self.check_update,
                     "timezone": self.timezone
                 },
                 "prior": prior,
