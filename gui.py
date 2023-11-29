@@ -51,4 +51,4 @@ if __name__ == "__main__":
             win32gui.ShowWindow(mynd, 0)
         except:
             pass
-        ft.app(target=main)
+        ft.app(target=main, port=28675)
