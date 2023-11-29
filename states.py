@@ -34,41 +34,7 @@ class SimulatedUniverse(UniverseUtils):
         # t1 = threading.Thread(target=os.system,kwargs={'command':'notif.exe > NUL 2>&1'})
         # t2 = threading.Thread(target=os.system,kwargs={'command':'python notif.py > NUL 2>&1'})
         log.info("当前版本：" + version + "  当前命途：" + self.fate)
-        if gui:
-            try:
-                lowest = (
-                    requests.get(
-                        "https://api.github.com/repos/CHNZYX/Auto_Simulated_Universe/releases/latest"
-                    )
-                    .json()["name"]
-                    .split("lowest")[1]
-                    .strip()
-                    .strip("v")
-                )
-                log.info("版本下限：v" + lowest)
-            except:
-                log.info("网络异常，尝试备用网址")
-                try:
-                    lowest = requests.get(
-                        "https://chnzyx.github.io/asu_version_check/"
-                    ).text.strip()
-                    log.info("版本下限：v" + lowest)
-                except:
-                    log.info("网络异常")#，强制退出")
-                    lowest = '5.31'
-            ves = version[1:].split(" ")[0]
-            try:
-                if float(lowest) > float(ves):
-                    log.info("当前版本过低，强制退出")
-                    self.validation = 0
-                else:
-                    self.validation = 1
-            except:
-                self.validation = 0
-        else:
-            self.validation = 1
-        if "debug" in version and not gui:
-            log.info("欢迎加入模拟宇宙小群，群号：921407322 密码：xyzzyx")
+        self.validation = 1
         self.now_map = None
         self.now_map_sim = None
         self.real_loc = [0, 0]
