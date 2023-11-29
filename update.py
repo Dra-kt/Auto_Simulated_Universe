@@ -122,6 +122,7 @@ def is_have_update():
 
 
 def main_operation():
+    version_local = states.version.strip('v').split(' ')[0]
     version_latest = '0.0'
     have_new = False
     operation_label.config(text="获取版本信息...")

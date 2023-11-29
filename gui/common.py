@@ -29,7 +29,7 @@ def close_dlg(page):
 
 
 def update_handle(_):  # 运行更新程序
-    os.system("../update.bat")
+    os.system(os.path.join(os.getcwd(), "update.bat"))
     exit(0)
 
 
