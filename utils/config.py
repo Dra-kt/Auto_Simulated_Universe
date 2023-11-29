@@ -11,7 +11,7 @@ class Config:
             self.abspath = '.'
         self.order_text = "1 2 3 4"
         self.angle = "1.0"
-        self.difficult = "4"
+        self.difficult = "5"
         self.allow_difficult = [1, 2, 3, 4, 5]
         self.text = "info.yml"
         self.fate = "巡猎"

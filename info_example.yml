@@ -15,16 +15,21 @@ config:
   difficulty: 5
   #主命途
   fate: 巡猎
-  #副命途
+  #副命途（可增减）
   secondary_fate:
   - 毁灭
   - 巡猎
   - 丰饶
-  #后面这些无视即可
+  # 以下若干配置项仅在GUI下生效
+  # 在小窗口显示当前地图
   show_map_mode: 0
+  # 调试模式
   debug_mode: 0
+  # 速通模式
   speed_mode: 0
+  # 慢速模式
   slow_mode: 0
+  # 自动检查更新
   check_update: 0
   timezone: Default
 #奇物，事件和祝福的优先级。祝福优先级只对主命途生效
