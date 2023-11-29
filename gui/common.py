@@ -34,6 +34,7 @@ def update_handle(_):  # 运行更新程序
 
 
 def check_update(page: Page):
+    have_new, latest_version = False, '0.0'
     try:
         have_new, latest_version = is_have_update()
     except:
@@ -46,7 +47,7 @@ def check_update(page: Page):
             content=ft.Text(f'最新版本为: {latest_version}'),
             actions=[
                 ft.TextButton('更新', on_click=update_handle),
-                ft.TextButton('取消', on_click=close_dlg)
+                ft.TextButton('取消', on_click=lambda _: close_dlg(page))
             ]
         )
         open_dlg(page, dlg)

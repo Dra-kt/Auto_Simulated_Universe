@@ -113,7 +113,7 @@ def is_have_update():
     except:
         raise RuntimeError
     try:
-        version_local = states.version
+        version_local = states.version.strip('v').split(' ')[0]
     except:
         version_local = "0.0"
     if float(version_remote) <= float(version_local):
