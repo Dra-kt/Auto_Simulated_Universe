@@ -103,28 +103,43 @@ def get_remote_version():
         raise RuntimeError
 
 
-def main_operation():
-    operation_label.config(text="获取版本信息...")
+def is_have_update():
+    """
+    检查是否需要更新
+    :return: 是否需要更新, 最新版本号
+    """
     try:
         version_remote = get_remote_version()
     except:
-        operation_label.config(text=f"网络异常")
-        return
-
+        raise RuntimeError
     try:
         version_local = states.version
     except:
         version_local = "0.0"
     if float(version_remote) <= float(version_local):
+        return False, version_remote
+    return True, version_remote
+
+
+def main_operation():
+    version_latest = '0.0'
+    have_new = False
+    operation_label.config(text="获取版本信息...")
+    try:
+        have_new, version_latest = is_have_update()
+    except:
+        operation_label.config(text=f"网络异常")
+        return
+    if have_new is False:
         operation_label.config(text="当前已是最新版本")
         return
 
-    if version_local == "0.0":
+    if version_latest == "0.0":
         version_local = "不存在"
     global popup
     popup = tk.Toplevel(root)
     popup.title("版本信息")
-    version_label = tk.Label(popup, text=f"当前版本： {version_local} 最新版本： {version_remote}")
+    version_label = tk.Label(popup, text=f"当前版本： {version_local} 最新版本： {version_latest}")
     version_label.pack(padx=20, pady=5)
     show_popup_button = tk.Button(popup, text="更新", command=start_download)
     show_popup_button.pack(padx=20, pady=5)
