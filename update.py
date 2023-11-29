@@ -38,6 +38,7 @@ def kill_process_by_name(process_name):
 def unzip_and_overwrite(zip_path, extract_path):
     with zipfile.ZipFile(zip_path, 'r') as zip_ref:
         for file_info in zip_ref.infolist():
+            file_info.filename = file_info.filename.split('/', 1)[-1]  # 移除文件夹
             try:
                 print(file_info)
                 zip_ref.extract(file_info, extract_path)
@@ -55,20 +56,23 @@ def download_file(url, save_path):
     cnt_ls = [0 for _ in range(5)]
 
     with open(save_path, 'wb') as file:
-        for data in response.iter_content(chunk_size=1024):
+        for data in response.iter_content(chunk_size=2048):
             size += file.write(data)
             size_ls.append(size)
             tm_ls.append(time.time())
-            progress_bar["value"] = size / total_size * 100
+            # progress_bar["value"] = size / total_size * 100
             if time.time() > tm + 1:
                 tm = time.time()
                 cnt_ls.append(len(tm_ls))
             if cnt_ls[-1] == len(tm_ls):
-                operation_label.config(text="下载中... {:.0f}%\t{:.0f}KB/s".format(progress_bar["value"],
-                                                                                   (size - size_ls[cnt_ls[-5]]) / (
-                                                                                           time.time() - tm_ls[
-                                                                                       cnt_ls[-5]]) / 1024))
-            progress_bar.update()
+                # operation_label.config(text="下载中... {:.0f}%\t{:.0f}KB/s".format(progress_bar["value"],
+                #                                                                    (size - size_ls[cnt_ls[-5]]) / (
+                #                                                                            time.time() - tm_ls[
+                #                                                                        cnt_ls[-5]]) / 1024))
+                operation_label.config(text="下载中...{:.0f}KB/s".format(
+                    (size - size_ls[cnt_ls[-5]]) / (time.time() - tm_ls[cnt_ls[-5]]) / 1024)
+                )
+            # progress_bar.update()
 
     operation_label.config(text="下载完成，正在退出...")
     res = kill_process_by_name("flet.exe")
