@@ -5,6 +5,8 @@ from gui.common import show_snack_bar, Page
 from utils.config import config
 import os
 
+from update import is_have_update
+
 
 def config_view(page: Page):
     def back_choose(_):
@@ -16,6 +18,41 @@ def config_view(page: Page):
         show_snack_bar(page, "保存成功", ft.colors.GREEN)
         page.go("/")
         page.update()
+
+    def open_dlg(dlg):  # 显示弹窗
+        page.dialog = dlg
+        dlg.open = True
+        page.update()
+
+    def close_dlg(_):  # 关闭弹窗
+        if page.dialog:
+            page.dialog.open = False
+            page.update()
+
+    def update_handle(_):  # 运行更新程序
+        os.system("../update.bat")
+
+    def check_update(_):
+        try:
+            have_new, latest_version = is_have_update()
+        except:
+            show_snack_bar(page, "更新检查失败", ft.colors.RED)
+            return
+        if have_new:
+            dlg = ft.AlertDialog(
+                modal=True,
+                title=ft.Text('发现新版本'),
+                content=ft.Text(f'最新版本为: {latest_version}'),
+                actions=[
+                    ft.TextButton('更新', on_click=update_handle),
+                    ft.TextButton('取消', on_click=close_dlg)
+                ]
+            )
+            open_dlg(dlg)
+        else:
+            show_snack_bar(page, "当前已是最新版本", ft.colors.GREEN)
+
+
 
     def show_map_checkbox_changed(_e):
         config.show_map_mode = (config.show_map_mode + 1) % 2
@@ -156,6 +193,17 @@ def config_view(page: Page):
                                             on_change=update_checkbox_changed,
                                             label_position='left',
                                             scale=1.2
+                                        ),
+                                        ft.ElevatedButton(
+                                            content=ft.Row(
+                                                [
+                                                    ft.Icon(ft.icons.UPDATE),
+                                                    ft.Text('检查更新', weight=ft.FontWeight.W_600),
+                                                ],
+                                                alignment=ft.MainAxisAlignment.SPACE_AROUND,
+                                            ),
+                                            on_click=check_update,
+                                            width=120
                                         )
                                     ]
                                 ),

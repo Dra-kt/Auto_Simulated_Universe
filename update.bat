@@ -1,13 +1,7 @@
 @echo off
 
-echo downloading...
+set CURR_PATH=%~dp0
+set VENV_PATH=%~dp0venv\
+set LOCAL_PYTHON=%VENV_PATH%\Scripts\
 
-powershell -Command "(New-Object System.Net.WebClient).DownloadFile('https://ghproxy.com/https://github.com/CHNZYX/Auto_Simulated_Universe/archive/main.zip', '.\repository.zip')"
-
-powershell -Command "Expand-Archive -Path '.\repository.zip' -DestinationPath '../' -Force"
-
-del ".\repository.zip"
-
-echo update finished
-
-pause
+%LOCAL_PYTHON%python.exe %CURR_PATH%update.py
