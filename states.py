@@ -17,13 +17,12 @@ import os
 from align_angle import main as align_angle
 from utils.config import config
 import datetime
-import requests
 import pytz
 import pyuac
 import utils.keyops as keyops
 
 # 版本号
-version = "v7.0"
+version = "v7.1"
 
 
 class SimulatedUniverse(UniverseUtils):
