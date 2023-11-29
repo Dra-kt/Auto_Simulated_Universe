@@ -1,11 +1,9 @@
 from flet_core import MainAxisAlignment, ControlEvent, CrossAxisAlignment, TextStyle
 import flet as ft
 
-from gui.common import show_snack_bar, Page
+from gui.common import show_snack_bar, Page, check_update
 from utils.config import config
 import os
-
-from update import is_have_update
 
 
 def config_view(page: Page):
@@ -18,41 +16,6 @@ def config_view(page: Page):
         show_snack_bar(page, "保存成功", ft.colors.GREEN)
         page.go("/")
         page.update()
-
-    def open_dlg(dlg):  # 显示弹窗
-        page.dialog = dlg
-        dlg.open = True
-        page.update()
-
-    def close_dlg(_):  # 关闭弹窗
-        if page.dialog:
-            page.dialog.open = False
-            page.update()
-
-    def update_handle(_):  # 运行更新程序
-        os.system("../update.bat")
-
-    def check_update(_):
-        try:
-            have_new, latest_version = is_have_update()
-        except:
-            show_snack_bar(page, "更新检查失败", ft.colors.RED)
-            return
-        if have_new:
-            dlg = ft.AlertDialog(
-                modal=True,
-                title=ft.Text('发现新版本'),
-                content=ft.Text(f'最新版本为: {latest_version}'),
-                actions=[
-                    ft.TextButton('更新', on_click=update_handle),
-                    ft.TextButton('取消', on_click=close_dlg)
-                ]
-            )
-            open_dlg(dlg)
-        else:
-            show_snack_bar(page, "当前已是最新版本", ft.colors.GREEN)
-
-
 
     def show_map_checkbox_changed(_e):
         config.show_map_mode = (config.show_map_mode + 1) % 2
@@ -94,7 +57,7 @@ def config_view(page: Page):
             pass
         nonlocal txt
         file_name = 'logs/notif.txt'
-        cnt='0'
+        cnt = '0'
         if os.path.exists(file_name):
             with open(file_name, 'w', encoding="utf-8") as file:
                 file.write(f"0\n已清空\n计数:0\n0")
@@ -104,17 +67,17 @@ def config_view(page: Page):
 
     def getnum():
         file_name = 'logs/notif.txt'
-        cnt='0'
+        cnt = '0'
         if os.path.exists(file_name):
             try:
-                with open(file_name, 'r', encoding="utf-8",errors='ignore') as file:
-                    s=file.readlines()
-                    cnt=s[0].strip('\n')
+                with open(file_name, 'r', encoding="utf-8", errors='ignore') as file:
+                    s = file.readlines()
+                    cnt = s[0].strip('\n')
             except:
                 pass
         return cnt
 
-    txt = ft.Text('本周已通关'+getnum()+'次',weight=ft.FontWeight.W_600,size=20)
+    txt = ft.Text('本周已通关' + getnum() + '次', weight=ft.FontWeight.W_600, size=20)
     page.views.append(
         ft.View(
             "/config",
@@ -202,7 +165,7 @@ def config_view(page: Page):
                                                 ],
                                                 alignment=ft.MainAxisAlignment.SPACE_AROUND,
                                             ),
-                                            on_click=check_update,
+                                            on_click=lambda _: check_update(page),
                                             width=120
                                         )
                                     ]
@@ -221,7 +184,7 @@ def config_view(page: Page):
                                                 ft.dropdown.Option("4"),
                                                 ft.dropdown.Option("5"),
                                             ],
-                                            text_style=TextStyle(color=ft.colors.PINK,weight=ft.FontWeight.W_600),
+                                            text_style=TextStyle(color=ft.colors.PINK, weight=ft.FontWeight.W_600),
                                             value=config.difficult,
                                             on_change=difficult_changed,
                                         ),
@@ -239,7 +202,7 @@ def config_view(page: Page):
                                                 ft.dropdown.Option("欢愉"),
                                                 ft.dropdown.Option("繁育"),
                                             ],
-                                            text_style=TextStyle(color=ft.colors.PINK,weight=ft.FontWeight.W_600),
+                                            text_style=TextStyle(color=ft.colors.PINK, weight=ft.FontWeight.W_600),
                                             value=config.fate,
                                             on_change=fate_changed,
                                         ),
@@ -253,7 +216,7 @@ def config_view(page: Page):
                                                 ft.dropdown.Option("America"),
                                                 ft.dropdown.Option("Europe"),
                                             ],
-                                            text_style=TextStyle(color=ft.colors.PINK,weight=ft.FontWeight.W_600),
+                                            text_style=TextStyle(color=ft.colors.PINK, weight=ft.FontWeight.W_600),
                                             value=config.timezone,
                                             on_change=timezone_changed,
                                         ),

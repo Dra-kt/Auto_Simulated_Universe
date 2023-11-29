@@ -5,10 +5,9 @@ import win32gui
 from flet_core import MainAxisAlignment, CrossAxisAlignment
 
 from align_angle import main as align_angle
-from gui.common import show_snack_bar, mynd, Page
+from gui.common import show_snack_bar, mynd, Page, open_dlg, close_dlg
 from states import SimulatedUniverse, version
 from utils.config import config
-from utils.update_map import update_map
 from utils.utils import notif
 import time
 
@@ -39,18 +38,6 @@ def choose_view(page: Page):
         finally:
             change_all_button(False)
 
-    # 弹出对话框
-    def open_dlg(dlg):
-        page.dialog = dlg
-        dlg.open = True
-        page.update()
-
-    # 关闭对话框
-    def close_dlg(e):
-        if page.dialog:
-            page.dialog.open = False
-            page.update()
-
     def angle(_e):
         show_snack_bar(page, "开始校准，请切换回游戏（¬､¬）", ft.colors.GREEN)
         res = run(align_angle)
@@ -68,10 +55,10 @@ def choose_view(page: Page):
                 title=ft.Text('需要校准'),
                 content=ft.Text('在首次运行前，推荐先进行校准操作'),
                 actions=[
-                    ft.TextButton('确认', on_click=close_dlg)
+                    ft.TextButton('确认', on_click=lambda x: close_dlg(page))
                 ]
             )
-            open_dlg(dlg)
+            open_dlg(page, dlg)
             page.first = 0
             return
         show_snack_bar(page, "开始运行，请切换回游戏（＾∀＾●）", ft.colors.GREEN)
