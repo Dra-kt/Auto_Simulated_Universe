@@ -47,14 +47,6 @@ def config_view(page: Page):
     def get_info_mode(d):
         ls = [False, True, None]
         return ls[d]
-    
-    def go_money(e=None):
-        dlg = ft.AlertDialog(
-            title=ft.Text("送杯咖啡喵 QWQ"), content=ft.Image("imgs/money.jpg")
-        )
-        page.dialog = dlg
-        dlg.open = True
-        page.update()
 
     def go_del(e=None):
         try:
@@ -70,7 +62,7 @@ def config_view(page: Page):
             with open(file_name, 'w', encoding="utf-8") as file:
                 file.write(f"0\n已清空\n计数:0\n0")
             show_snack_bar(page, "清空成功", ft.colors.GREEN)
-            txt.value = '已通关0次'
+            txt.value = '本周已通关0次'
             page.update()
 
     def getnum():
@@ -85,7 +77,7 @@ def config_view(page: Page):
                 pass
         return cnt
 
-    txt = ft.Text('已通关'+getnum()+'次',weight=ft.FontWeight.W_600,size=20)
+    txt = ft.Text('本周已通关'+getnum()+'次',weight=ft.FontWeight.W_600,size=20)
     page.views.append(
         ft.View(
             "/config",
@@ -228,20 +220,7 @@ def config_view(page: Page):
                                             on_click=go_del,
                                         ),
                                     ]
-                                ),
-                                ft.Container(height=210),
-                                ft.ElevatedButton(
-                                    content=ft.Row(
-                                        [
-                                            ft.Icon(ft.icons.THUMB_UP),
-                                            ft.Text("赞赏", weight=ft.FontWeight.W_800, size=16),
-                                        ],
-                                        alignment=ft.MainAxisAlignment.SPACE_AROUND,
-                                    ),
-                                    on_click=go_money,
-                                    width=150,
-                                    height=50
-                                ),
+                                )
                             ],
                             alignment=MainAxisAlignment.SPACE_AROUND,
                             horizontal_alignment=CrossAxisAlignment.CENTER,
