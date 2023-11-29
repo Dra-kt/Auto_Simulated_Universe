@@ -90,13 +90,20 @@ def start_download():
     t.start()
 
 
-def main_operation():
+def get_remote_version():
     global info
-    operation_label.config(text="获取版本信息...")
     repo_url = "https://api.github.com/repos/Dra-kt/Auto_Simulated_Universe/releases/latest"
     info = get_latest_release_info(repo_url)
     try:
-        version_remote = info['tag_name'].strip('v').split(' ')[0]
+        return info['tag_name'].strip('v').split(' ')[0]
+    except:
+        raise RuntimeError
+
+
+def main_operation():
+    operation_label.config(text="获取版本信息...")
+    try:
+        version_remote = get_remote_version()
     except:
         operation_label.config(text=f"网络异常")
         return
