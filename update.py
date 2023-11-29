@@ -9,6 +9,8 @@ import os
 
 import states
 
+global root, progress_bar, operation_label, info, popup
+
 
 def get_latest_release_info(repo_url):
     response = requests.get(repo_url)
@@ -82,6 +84,7 @@ def download_file(url, save_path):
 
 
 def start_download():
+    global info
     popup.destroy()
     operation_label.config(text="下载中...")
     download_url = f"https://mirror.ghproxy.com/https://github.com/Dra-kt/Auto_Simulated_Universe/archive/refs/tags/{info['tag_name']}.zip"
@@ -128,6 +131,7 @@ def main_operation():
 
 
 def main():
+    global root, operation_label, progress_bar
     root = tk.Tk()
     root.title("Update")
 
@@ -145,6 +149,7 @@ def main():
 
     # 运行主循环
     root.mainloop()
+
 
 if __name__ == "__main__":
     main()
