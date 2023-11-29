@@ -1,18 +1,10 @@
-[简体中文](README.md) | [繁体中文](README_CHT.md) | [English](README_ENG.md)
-
 # Auto_Simulated_Universe
 星穹铁道-模拟宇宙全自动化
-
-快速上手，请访问：[项目文档](https://asu.stysqy.top/)
-
-遇到问题，请在提问前查看：[Q&A](https://asu.stysqy.top/guide/qa.html)
-
-运行自动化时不能用电脑做其他事？试试多用户后台运行！[后台运行](https://asu.stysqy.top/guide/bs.html)
 
 ----------------------------------------------------------------------------------------------
 
 ## 免责声明
-本软件是一个外部工具旨在自动化崩坏星轨的游戏玩法。它被设计成仅通过现有用户界面与游戏交互,并遵守相关法律法规。该软件包旨在提供简化和用户通过功能与游戏交互,并且它不打算以任何方式破坏游戏平衡或提供任何不公平的优势。该软件包不会以任何方式修改任何游戏文件或游戏代码。
+本软件是一个外部工具旨在自动化崩坏星穹铁道的游戏玩法。它被设计成仅通过现有用户界面与游戏交互,并遵守相关法律法规。该软件包旨在提供简化和用户通过功能与游戏交互,并且它不打算以任何方式破坏游戏平衡或提供任何不公平的优势。该软件包不会以任何方式修改任何游戏文件或游戏代码。
 
 This software is open source, free of charge and for learning and exchange purposes only. The developer team has the final right to interpret this project. All problems arising from the use of this software are not related to this project and the developer team. If you encounter a merchant using this software to practice on your behalf and charging for it, it may be the cost of equipment and time, etc. The problems and consequences arising from this software have nothing to do with it.
 
@@ -24,21 +16,19 @@ This software is open source, free of charge and for learning and exchange purpo
     "严禁使用外挂、加速器、脚本或其他破坏游戏公平性的第三方工具。"
     "一经发现，米哈游（下亦称“我们”）将视违规严重程度及违规次数，采取扣除违规收益、冻结游戏账号、永久封禁游戏账号等措施。"
 
-## 安装GUI [![](https://img.shields.io/github/downloads/CHNZYX/Auto_Simulated_Universe/total?color=66ccff)](https://github.com/CHNZYX/Auto_Simulated_Universe/releases)
+## 安装
 
 ## 命令行用法
 
-只支持1920\*1080(窗口化或全屏幕)，关闭hdr，文本语言选择简体中文。代码版[下载链接](https://github.com/CHNZYX/Auto_Simulated_Universe/archive/refs/heads/main.zip)
+只支持1920*1080(窗口化或全屏幕)，关闭hdr，文本语言选择简体中文。[下载链接](https://github.com/Dra-kt/Auto_Simulated_Universe/archive/refs/heads/main.zip)
 
 默认世界：比如说如果你当前模拟宇宙默认世界4，但是想自动化世界6，那么请先进入一次世界6来改变默认世界
-
-如果没怎么接触过python，建议直接在[release](https://github.com/CHNZYX/Auto_Simulated_Universe/releases/latest)中下载gui版本，并直接阅读GUI使用方法
 
 **第一次运行**
 
 双击`install_requirements.bat`安装依赖库
 
-重命名info_example.yml为info.yml
+重命名`info_example.yml`为`info.yml`
 
 **运行自动化**
 
@@ -70,10 +60,9 @@ config:
   angle: 1.0  //校准数据请勿更改
   difficulty: 4 //宇宙的难度，如果你要打难度1就改成1保存
   fate: 巡猎 //命途选择，默认巡猎，可以直接修改为其它命途。
-  map_sha: '' //地图数据的版本，不建议更改
   show_map_mode: 0
   debug_mode: 0
-  speed_mode: 0
+  speed_mode: 0 // 是否默认开启速通模式（仅GUI）
   slow_mode: 0
   timezone: Default
 prior:
@@ -132,11 +121,9 @@ F8/‘停止’按钮停止运行。
 
 速通模式：开启表示只打每层最后一个怪
 
-推荐最低画质配置：
-
-![画质](https://github.com/CHNZYX/Auto_Simulated_Universe/blob/main/imgs/image_quality.jpg)
-
 **校准**
+
+建议在首次运行前先执行校准流程
 
 如果出现视角转动过大/过小而导致迷路的问题，可能是校准值出问题了，可以尝试手动校准：
 
@@ -146,7 +133,7 @@ F8/‘停止’按钮停止运行。
 
 ## 更新
 
-双击update.exe
+在GUI设置中点击`检查更新`按钮更新，若开启自动检查更新则会在每次程序启动时自动检查更新
 
 ## 自动深渊
 
@@ -207,28 +194,8 @@ F8/‘停止’按钮停止运行。
 录制结束后可以暂离并重新运行自动化测试地图，如果通过测试，你就成功录制到了新图！
 
 ----------------------------------------------------------------------------------------------
+## 原项目贡献者
 
-欢迎加入，欢迎反馈bug，QQ群：831830526
+原项目[链接](https://github.com/CHNZYX/Auto_Simulated_Universe)
 
-----------------------------------------------------------------------------------------------
-
-如果喜欢本项目，可以打赏送作者一杯咖啡喵！
-
-![打赏](https://github.com/CHNZYX/Auto_Simulated_Universe/blob/main/imgs/money.jpg)
-
-----------------------------------------------------------------------------------------------
-## 贡献者
-
-感谢以下贡献者对本项目做出的贡献
-
-<a href="https://github.com/CHNZYX/Auto_Simulated_Universe/graphs/contributors">
-
-  <img src="https://contrib.rocks/image?repo=CHNZYX/Auto_Simulated_Universe" />
-
-</a>
-
-![Alt](https://repobeats.axiom.co/api/embed/a24da575ebc375e58ec8d8a0d7fff6d26306d2fc.svg "Repobeats analytics image")
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=CHNZYX/Auto_Simulated_Universe&type=Date)](https://star-history.com/#CHNZYX/Auto_Simulated_Universe&Date)
+<img src="https://contrib.rocks/image?repo=CHNZYX/Auto_Simulated_Universe" />
