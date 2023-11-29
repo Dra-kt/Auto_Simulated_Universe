@@ -127,7 +127,7 @@ def main_operation():
     show_popup_button.pack(padx=20, pady=5)
 
 
-if __name__ == "__main__":
+def main():
     root = tk.Tk()
     root.title("Update")
 
@@ -145,3 +145,6 @@ if __name__ == "__main__":
 
     # 运行主循环
     root.mainloop()
+
+if __name__ == "__main__":
+    main()
