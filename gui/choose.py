@@ -40,12 +40,6 @@ def choose_view(page: Page):
             change_all_button(False)
 
     def angle(_e):
-        if config.angle == "1.0" or page.first == 1:
-            go_about()
-            time.sleep(8)
-            page.first = 0
-            page.dialog.open = False
-            page.update()
         show_snack_bar(page, "开始校准，请切换回游戏（¬､¬）", ft.colors.GREEN)
         res = run(align_angle)
         if res == 1:
@@ -54,12 +48,6 @@ def choose_view(page: Page):
             show_snack_bar(page, "校准失败（⊙.⊙）", ft.colors.RED)
 
     def start(_e):
-        if page.first == 1:
-            go_about()
-            time.sleep(8)
-            page.first = 0
-            page.dialog.open = False
-            page.update()
         show_snack_bar(page, "开始运行，请切换回游戏（＾∀＾●）", ft.colors.GREEN)
         tm = time.time()
         page.su = run(
@@ -126,9 +114,9 @@ def choose_view(page: Page):
 
     def go_about(e=None):
         dlg = ft.AlertDialog(
-            title=ft.Text("此程序为免费开源项目，如果你付了钱请立刻退款！"),
+            title=ft.Text("二次开发说明"),
             content=ft.Text(
-                "咸鱼倒狗4000+！你付给倒狗的每一分钱都会让开源自动化更艰难，请退款并举报商家！本项目已经因倒卖行为受到严重威胁，请帮助我们！\n链接：https://github.com/CHNZYX/Auto_Simulated_Universe\n群号：831830526\n10秒后自动关闭"
+                "项目原作：https://github.com/CHNZYX/Auto_Simulated_Universe"
             ),
         )
         page.dialog = dlg
@@ -136,12 +124,7 @@ def choose_view(page: Page):
         page.update()
 
     def go_money(e=None):
-        dlg = ft.AlertDialog(
-            title=ft.Text("送杯咖啡喵 QWQ"), content=ft.Image("imgs/money.jpg")
-        )
-        page.dialog = dlg
-        dlg.open = True
-        page.update()
+        go_about()
 
     def go_dep(e=None):
         dlg = ft.AlertDialog(
@@ -151,18 +134,6 @@ def choose_view(page: Page):
         page.dialog = dlg
         dlg.open = True
         page.update()
-
-    def unlock(e=None):
-        show_snack_bar(page, "解锁限制功能已经弃用o(*￣▽￣*)ブ", ft.colors.RED)
-        return
-        go_money()
-        time.sleep(3)
-        page.dialog.open = False
-        page.update()
-        show_snack_bar(page, "稍后解锁限制，赞助页面在右下角按钮~o( =∩ω∩= )m", ft.colors.GREEN)
-        time.sleep(7)
-        config.unlock = 1
-        show_snack_bar(page, "已临时解锁限制o(*￣▽￣*)ブ", ft.colors.GREEN)
 
     def bonus_changed(e):
         config.bonus = not config.bonus
@@ -182,13 +153,7 @@ def choose_view(page: Page):
                         ),
                         ft.Container(
                             content=ft.Text(
-                                version+' by CHNZYX',
-                                size=20,
-                            ),
-                        ),
-                        ft.Container(
-                            content=ft.Text(
-                                "开源免费，任何收费行为均为倒卖！",
+                                version+' by Dra-kt (Origin from CHNZYX)',
                                 size=20,
                             ),
                         ),
