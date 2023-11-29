@@ -21,7 +21,6 @@ class Config:
         self.debug_mode = 0
         self.speed_mode = 0
         self.slow_mode = 0
-        self.force_update = 0
         self.unlock = 0
         self.bonus = 0
         self.timezones = ['America', 'Asia', 'Europe', 'Default']
@@ -62,7 +61,6 @@ class Config:
                     self.show_map_mode = config['show_map_mode']
                     self.debug_mode = config['debug_mode']
                     self.speed_mode = config['speed_mode']
-                    self.force_update = config['force_update']
                     self.timezone = config['timezone']
                     self.slow_mode = config['slow_mode']
                 except:
@@ -132,7 +130,6 @@ class Config:
                     "debug_mode": self.debug_mode,
                     "speed_mode": self.speed_mode,
                     "slow_mode": self.slow_mode,
-                    "force_update": self.force_update,
                     "timezone": self.timezone
                 },
                 "prior": prior,

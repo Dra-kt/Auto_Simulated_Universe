@@ -128,12 +128,6 @@ def choose_view(page: Page):
         except:
             pass
 
-    def update_maps(_e):
-        show_snack_bar(page, "更新地图功能已经弃用（´・н・‘）", ft.colors.RED)
-        return
-        show_snack_bar(page, "开始更新地图（´・н・‘）", ft.colors.GREEN)
-        msg, col = update_map(config.force_update)
-        show_snack_bar(page, msg, col)
 
     def go_config(_e):
         page.go("/config")

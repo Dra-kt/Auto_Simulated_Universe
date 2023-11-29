@@ -29,9 +29,6 @@ def config_view(page: Page):
     def slow_checkbox_changed(_e):
         config.slow_mode = not config.slow_mode
 
-    def force_update_checkbox_changed(_e):
-        config.force_update = (config.force_update + 1) % 2
-
     def difficult_changed(e: ControlEvent):
         config.difficult = e.data
 
@@ -150,11 +147,6 @@ def config_view(page: Page):
                                             label_position='left',
                                             scale=1.2
                                         ),
-                                        # ft.Checkbox(
-                                        #     label="强制更新",
-                                        #     value=get_info_mode(config.force_update),
-                                        #     on_change=force_update_checkbox_changed,
-                                        # ),
                                     ]
                                 ),
                                 ft.Container(height=20),

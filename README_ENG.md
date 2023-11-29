@@ -65,7 +65,6 @@ config:
   debug_mode: 0
   speed_mode: 0
   slow_mode: 0
-  force_update: 0
   timezone: Default
 prior:
   # Priority information, adjust as needed.

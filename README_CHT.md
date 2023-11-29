@@ -69,7 +69,6 @@ config:
   debug_mode: 0
   speed_mode: 0
   slow_mode: 0
-  force_update: 0
   timezone: Default
 prior:
   優先級信息，按需調整
