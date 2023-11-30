@@ -27,6 +27,8 @@ config:
   debug_mode: 0
   # 速通模式
   speed_mode: 0
+  # 使用消耗品
+  use_consumable: 0
   # 慢速模式
   slow_mode: 0
   # 自动检查更新
