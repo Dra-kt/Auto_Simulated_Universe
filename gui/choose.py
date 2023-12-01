@@ -1,43 +1,15 @@
-import traceback
-
 import flet as ft
-import win32gui
 from flet_core import MainAxisAlignment, CrossAxisAlignment
 
 from align_angle import main as align_angle
-from gui.common import show_snack_bar, mynd, Page, open_dlg, close_dlg
-from states import SimulatedUniverse, version
+from gui.common import show_snack_bar, mynd, Page, open_dlg, close_dlg, run
+from states import version
 from utils.config import config
-from utils.utils import notif
-import time
+
+from gui.goRun import startConfig
 
 
 def choose_view(page: Page):
-    def change_all_button(value: bool = True):
-        cnt = 0
-        for i in page.views[0].controls[0].controls:
-            if isinstance(i, ft.FilledButton):
-                if cnt <= 1:
-                    i.disabled = value
-                    cnt += 1
-                else:
-                    i.disabled = False
-        page.update()
-
-    def run(func, *args, **kwargs):
-        try:
-            change_all_button()
-            res = func(*args, **kwargs)
-            change_all_button(False)
-            return res
-        except ValueError as e:
-            pass
-        except Exception:
-            print("E: 运行函数时出现错误")
-            traceback.print_exc()
-        finally:
-            change_all_button(False)
-
     def angle(_e):
         show_snack_bar(page, "开始校准，请切换回游戏（¬､¬）", ft.colors.GREEN)
         res = run(align_angle)
@@ -61,32 +33,7 @@ def choose_view(page: Page):
             open_dlg(page, dlg)
             page.first = 0
             return
-        show_snack_bar(page, "开始运行，请切换回游戏（＾∀＾●）", ft.colors.GREEN)
-        tm = time.time()
-        page.su = run(
-            SimulatedUniverse,
-            1,
-            int(config.debug_mode),
-            int(config.show_map_mode),
-            int(config.speed_mode),
-            int(config.use_consumable),
-            int(config.slow_mode),
-            unlock=True,
-            bonus=config.bonus,
-            gui=1,
-        )
-        run(page.su.start)
-        txt = " "
-        if time.time() - tm < 20:
-            go_dep()
-            # txt = "请确认python+numpy已安装并正确配置环境变量"
-        try:
-            win32gui.SetForegroundWindow(page.su.my_nd)
-        except:
-            pass
-        if page.su is not None:
-            run(page.su.stop)
-        notif("已退出自动化", txt)
+        startConfig(page)
 
     def start_abyss(_e):
         page.go("/abyss")
@@ -110,24 +57,7 @@ def choose_view(page: Page):
                 "项目原作：https://github.com/CHNZYX/Auto_Simulated_Universe"
             ),
         )
-        page.dialog = dlg
-        dlg.open = True
-        page.update()
-
-    def go_money(e=None):
-        go_about()
-
-    def go_dep(e=None):
-        dlg = ft.AlertDialog(
-            title=ft.Text("异常退出"),
-            content=ft.Text(" "),  # "请确认python+numpy已安装并正确配置环境变量")
-        )
-        page.dialog = dlg
-        dlg.open = True
-        page.update()
-
-    def bonus_changed(e):
-        config.bonus = not config.bonus
+        open_dlg(page, dlg)
 
     # View
     page.views.append(
@@ -217,28 +147,6 @@ def choose_view(page: Page):
                     ],
                     alignment=MainAxisAlignment.CENTER,
                     horizontal_alignment=CrossAxisAlignment.CENTER,
-                ),
-                ft.Row(
-                    [
-                        ft.Container(width=315),
-                        ft.Switch(
-                            label="沉浸奖励", on_change=bonus_changed, value=config.bonus, label_position='left',
-                            scale=1.2
-                        ),
-                    ]
-                ),
-                ft.Row(
-                    [
-                        ft.Container(),
-                        ft.IconButton(
-                            icon=ft.icons.THUMB_UP,
-                            tooltip="赞赏",
-                            icon_size=35,
-                            on_click=go_money,
-                        ),
-                    ],
-                    alignment=MainAxisAlignment.SPACE_BETWEEN,
-                    vertical_alignment=CrossAxisAlignment.END,
                 ),
             ],
             horizontal_alignment=CrossAxisAlignment.CENTER,

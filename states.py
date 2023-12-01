@@ -12,7 +12,7 @@ from copy import deepcopy
 from utils.log import log, set_debug
 from utils.map_log import map_log
 from utils.update_map import update_map
-from utils.utils import UniverseUtils, set_forground, notif
+from utils.utils import UniverseUtils, set_forground, notif, shutdown_pc
 import os
 from align_angle import main as align_angle
 from utils.config import config
@@ -27,7 +27,7 @@ version = "v7.3"
 
 class SimulatedUniverse(UniverseUtils):
     def __init__(
-        self, find, debug, show_map, speed, consumable, slow, nums=10000, unlock=False, bonus=False, update=0, gui=0
+        self, find, debug, show_map, speed, consumable, slow, nums=10000, unlock=False, bonus=False, update=0, gui=0, shutdown=False
     ):
         super().__init__()
         # t1 = threading.Thread(target=os.system,kwargs={'command':'notif.exe > NUL 2>&1'})
@@ -61,6 +61,7 @@ class SimulatedUniverse(UniverseUtils):
         self.fail_count = 0
         self.nums = nums
         self.end = 0
+        self.shutdown = shutdown
         ex_notif = ""
         if not debug:
             pyautogui.FAILSAFE = False
@@ -212,6 +213,10 @@ class SimulatedUniverse(UniverseUtils):
             log.info('已完成指定次数，准备停止运行')
             self.end = 1
         self.floor = 0
+
+        # 若设置了自动关机，执行自动关机
+        if self.shutdown and self.end:
+            shutdown_pc()
 
     def normal(self):
         # self.lst_changed：最后一次交互时间，长时间无交互则暂离
@@ -923,7 +928,7 @@ class SimulatedUniverse(UniverseUtils):
 
 
 def main():
-    global speed, consumable, slow, bonus, nums, update
+    global speed, consumable, slow, bonus, nums, update, shutdown
     if speed == -1:
         speed = config.speed_mode
     if consumable == -1:
@@ -931,7 +936,7 @@ def main():
     if slow == -1:
         slow = config.slow_mode
     log.info(f"find: {find}, debug: {debug}, show_map: {show_map}, consumable: {consumable}")
-    su = SimulatedUniverse(find, debug, show_map, speed, consumable, slow, nums=nums, bonus=bonus, update=update)
+    su = SimulatedUniverse(find, debug, show_map, speed, consumable, slow, nums=nums, bonus=bonus, update=update, shutdown=shutdown)
     try:
         su.start()
     except ValueError as e:
@@ -955,6 +960,7 @@ if __name__ == "__main__":
         slow = -1
         bonus = 0
         nums = 10000
+        shutdown = 0
         for i in sys.argv[1:]:
             st = i.split("-")[-1]
             if "=" not in st:

@@ -1,7 +1,7 @@
 from flet_core import MainAxisAlignment, ControlEvent, CrossAxisAlignment, TextStyle
 import flet as ft
 
-from gui.common import show_snack_bar, Page, check_update
+from gui.common import show_snack_bar, Page, check_update, get_info_mode
 from utils.config import config
 import os
 
@@ -43,10 +43,6 @@ def config_view(page: Page):
 
     def textbox_changed(e):
         config.order_text = e.control.value
-
-    def get_info_mode(d):
-        ls = [False, True, None]
-        return ls[d]
 
     def go_del(e=None):
         try:

@@ -1202,8 +1202,8 @@ class UniverseUtils:
         upper = np.array([26, 100, 255])
         mask = cv.inRange(cvt, lower, upper)
         result = np.sum(mask)//255
-        return result > 100 and result < 280
-    
+        return 100 < result < 280
+
     def isrun(self):
         scr = self.screen
         shape = (int(self.scx * 12), int(self.scx * 12))
@@ -1329,7 +1329,7 @@ class UniverseUtils:
                         keyops.keyUp("w")
                         return
                     break
-                if self.check("auto_2", 0.0583, 0.0769): 
+                if self.check("auto_2", 0.0583, 0.0769):
                     keyops.keyUp("w")
                     self.stop_move=1
                     self.mini_state+=2
@@ -1397,3 +1397,11 @@ class UniverseUtils:
                 self.press(i, 0.25)
                 time.sleep(0.4)
             pyautogui.click()
+
+# 完成后自动关机
+def shutdown_pc():
+    try:
+        os.system("shutdown /s /t 30")
+    except:
+        return False
+    return True

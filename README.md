@@ -39,7 +39,7 @@ python states.py
 
 详细参数：
 ```plaintext
-python states.py --bonus=<bonus> --debug=<debug> --speed=<speed> --find=<find> --nums=<nums>
+python states.py --bonus=<bonus> --debug=<debug> --speed=<speed> --find=<find> --nums=<nums> --shutdown=<shutdown>
 ```
 bonus in [0,1]：是否开启沉浸奖励
 
@@ -52,6 +52,8 @@ debug in [0,1,2]：开启调试模式
 find in [0,1]：0为录图，1为跑图
 
 nums：指定通关次数，必须为正整数
+
+nums in [0,1]：是否在结束后自动关机
 
 ----------------------------------------------------------------------------------------------
 
@@ -110,7 +112,7 @@ python align_angle.py
 
 **运行自动化**
 
-点击运行
+点击运行，确认设置后点击开始
 
 注意！！！！！ 开始运行/开始校准之后就不要移动游戏窗口了！要移动请先停止自动化！
 

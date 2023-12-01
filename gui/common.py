@@ -1,3 +1,4 @@
+import traceback
 from typing import Optional
 import os
 
@@ -26,6 +27,11 @@ def close_dlg(page):
     if page.dialog:
         page.dialog.open = False
         page.update()
+
+
+def get_info_mode(d):
+    ls = [False, True, None]
+    return ls[d]
 
 
 def update_handle(_):  # 运行更新程序
@@ -69,6 +75,35 @@ def show_snack_bar(page, text, color, selectable=False):
             bgcolor=color,
         )
     )
+
+
+# 更改所有按钮状态
+def change_all_button(page, value: bool = True):
+    cnt = 0
+    for i in page.views[0].controls[0].controls:
+        if isinstance(i, ft.FilledButton):
+            if cnt <= 1:
+                i.disabled = value
+                cnt += 1
+            else:
+                i.disabled = False
+    page.update()
+
+
+def run(func, *args, **kwargs):
+    try:
+        # change_all_button()
+        res = func(*args, **kwargs)
+        # change_all_button(False)
+        return res
+    except ValueError as e:
+        pass
+    except Exception:
+        print("E: 运行函数时出现错误")
+        traceback.print_exc()
+    finally:
+        pass
+        # change_all_button(False)
 
 
 def cleanup():
