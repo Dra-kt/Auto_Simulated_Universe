@@ -65,16 +65,11 @@ def download_file(url, save_path):
                 tm = time.time()
                 cnt_ls.append(len(tm_ls))
             if cnt_ls[-1] == len(tm_ls):
-                # operation_label.config(text="下载中... {:.0f}%\t{:.0f}KB/s".format(progress_bar["value"],
-                #                                                                    (size - size_ls[cnt_ls[-5]]) / (
-                #                                                                            time.time() - tm_ls[
-                #                                                                        cnt_ls[-5]]) / 1024))
                 operation_label.config(text="下载中...{:.0f}KB/s".format(
                     (size - size_ls[cnt_ls[-5]]) / (time.time() - tm_ls[cnt_ls[-5]]) / 1024)
                 )
-            # progress_bar.update()
 
-    operation_label.config(text="下载完成，正在退出...")
+    operation_label.config(text="下载完成，正在准备更新...")
     res = kill_process_by_name("flet.exe")
     res |= kill_process_by_name("gui.exe")
     if res:
@@ -85,6 +80,8 @@ def download_file(url, save_path):
     unzip_and_overwrite('./latest.zip', '.')
     os.remove('./latest.zip')
     operation_label.config(text="更新完成")
+    # 更新完成后退出
+    tk.Button(popup, text="确定", command=lambda _: exit(0))
 
 
 def start_download():
@@ -158,10 +155,6 @@ def main():
     # 创建操作标签
     operation_label = tk.Label(root, text="Starting...")
     operation_label.pack(pady=10)
-
-    # 创建进度条
-    progress_bar = ttk.Progressbar(root, orient="horizontal", length=300, mode="determinate")
-    progress_bar.pack(pady=10)
 
     # 执行操作
     t = threading.Thread(target=main_operation)

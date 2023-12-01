@@ -1,6 +1,7 @@
 *.py text eol=crlf
 *.bat text eol=crlf
 *.yml text eol=crlf
+*.txt text eol=crlf
 
 *.png binary
 *.jpg binary
