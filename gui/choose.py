@@ -81,11 +81,6 @@ def choose_view(page: Page):
             go_dep()
             # txt = "请确认python+numpy已安装并正确配置环境变量"
         try:
-            if page.su.validate == 0:
-                txt = "版本过低，请更新"
-        except:
-            pass
-        try:
             win32gui.SetForegroundWindow(page.su.my_nd)
         except:
             pass
@@ -104,18 +99,6 @@ def choose_view(page: Page):
             pass
         if page.su is not None:
             run(page.su.stop)
-
-    def hide(_e):
-        try:
-            if win32gui.IsWindowVisible(mynd):
-                show_snack_bar(page, "隐藏命令行窗口", ft.colors.GREEN)
-                win32gui.ShowWindow(mynd, 0)  # 隐藏命令行窗口
-            else:
-                show_snack_bar(page, "显示命令行窗口", ft.colors.GREEN)
-                win32gui.ShowWindow(mynd, 1)  # 显示命令行窗口
-        except:
-            pass
-
 
     def go_config(_e):
         page.go("/config")
@@ -196,17 +179,6 @@ def choose_view(page: Page):
                                 alignment=ft.MainAxisAlignment.SPACE_AROUND,
                             ),
                             on_click=start_abyss,
-                            width=120,
-                        ),
-                        ft.ElevatedButton(
-                            content=ft.Row(
-                                [
-                                    ft.Icon(ft.icons.HIDE_SOURCE),
-                                    ft.Text("显隐", weight=ft.FontWeight.W_800),
-                                ],
-                                alignment=ft.MainAxisAlignment.SPACE_AROUND,
-                            ),
-                            on_click=hide,
                             width=120,
                         ),
                         ft.ElevatedButton(
