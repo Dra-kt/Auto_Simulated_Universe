@@ -136,7 +136,7 @@ class SimulatedUniverse(UniverseUtils):
             if self._stop:
                 break
             self.get_screen()
-            #self.click_target('imgs/skill_pt.jpg',0.9,True) # 如果需要输出某张图片在游戏窗口中的坐标，可以用这个
+            #self.click_target('imgs/use_package.jpg',0.9,True) # 如果需要输出某张图片在游戏窗口中的坐标，可以用这个
             """
             if begin and not self.check("f", 0.4437,0.4231) and not self.check("abyss/1",0.8568,0.6769):
                 begin = 0
@@ -430,7 +430,7 @@ class SimulatedUniverse(UniverseUtils):
                         log.info("target %s" % self.target)
                     if self._stop:
                         return 1
-                    if self.consumable != 0 and self.floor in [3, 7, 12]:
+                    if self.consumable and not self.check_bonus and self.floor in [3, 7, 12][-self.consumable:]:
                         self.use_consumable(1, 1)
                     self.press("1")
                 # 录制模式，保存初始小地图
@@ -614,18 +614,12 @@ class SimulatedUniverse(UniverseUtils):
             res = self.ts.split_and_find(self.tk.strange, img, mode="strange")
             self.click(self.calc_point((0.5000, 0.7333), res[0]))
             self.click((0.1365, 0.1093))
-            tm=time.time()
-            while time.time()-tm<1.4 and self.check("strange", 0.9417, 0.9481):
-                time.sleep(0.1)
-                self.get_screen()
+            self.wait_fig(lambda:self.check("strange", 0.9417, 0.9481), 1.4)
         # 丢弃奇物
         elif self.check("drop", 0.9406, 0.9491):
             self.click((0.4714, 0.5500))
             self.click((0.1339, 0.1028))
-            tm=time.time()
-            while time.time()-tm<1.4 and self.check("drop", 0.9406, 0.9491):
-                time.sleep(0.1)
-                self.get_screen()
+            self.wait_fig(lambda:self.check("drop", 0.9406, 0.9491), 1.4)
         elif self.check("drop_bless", 0.9417, 0.9481, threshold=0.95):
             time.sleep(1.5)
             st = set(self.tk.fates) - set(self.tk.secondary)
@@ -929,6 +923,13 @@ class SimulatedUniverse(UniverseUtils):
 
 
 def main():
+    global speed, consumable, slow, bonus, nums, update
+    if speed == -1:
+        speed = config.speed_mode
+    if consumable == -1:
+        consumable = config.use_consumable
+    if slow == -1:
+        slow = config.slow_mode
     log.info(f"find: {find}, debug: {debug}, show_map: {show_map}, consumable: {consumable}")
     su = SimulatedUniverse(find, debug, show_map, speed, consumable, slow, nums=nums, bonus=bonus, update=update)
     try:
@@ -949,9 +950,9 @@ if __name__ == "__main__":
         debug = 0
         show_map = 0
         update = 0
-        speed = 0
-        consumable = 0
-        slow = 0
+        speed = -1
+        consumable = -1
+        slow = -1
         bonus = 0
         nums = 10000
         for i in sys.argv[1:]:

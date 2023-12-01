@@ -27,12 +27,13 @@ config:
   debug_mode: 0
   # 速通模式
   speed_mode: 0
-  # 使用消耗品
-  use_consumable: 0
   # 慢速模式
   slow_mode: 0
   # 自动检查更新
   check_update: 0
+  #use_consumable：0代表不使用消耗品，1代表最终boss使用消耗品，2代表最后两个boss使用消耗品，3代表所有boss都使用消耗品
+  #自动使用第一个攻击/防御消耗品，可以收藏消耗品（星星标记）来改变背包中消耗品的顺序
+  use_consumable: 0
   timezone: Default
 #奇物，事件和祝福的优先级。祝福优先级只对主命途生效
 #不要擅自更改每一部分之间的顺序
