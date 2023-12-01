@@ -1401,6 +1401,7 @@ class UniverseUtils:
 # 完成后自动关机
 def shutdown_pc():
     try:
+        log.info("执行关机操作")
         os.system("shutdown /s /t 30")
     except:
         return False
