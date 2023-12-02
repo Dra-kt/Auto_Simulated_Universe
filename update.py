@@ -6,6 +6,7 @@ import time
 import threading
 import zipfile
 import os
+from itertools import zip_longest
 
 import states
 
@@ -104,6 +105,25 @@ def get_remote_version():
         raise RuntimeError
 
 
+def check_version_code(remote: str, local: str) -> bool:
+    """
+    检查版本号（不带有前缀v）
+    :param remote: 获取到的远程版本号
+    :param local: 本地版本号
+    :return: 若远程版本号大于本地版本号，则返回True，否则返回False
+    """
+    for rem, loc in zip_longest(
+        remote.split('.'),
+        local.split('.'),
+        fillvalue=0
+    ):
+        if int(rem) > int(loc):
+            return True
+        elif int(rem) < int(loc):
+            return False
+    return False
+
+
 def is_have_update():
     """
     检查是否需要更新
@@ -117,9 +137,9 @@ def is_have_update():
         version_local = states.version.strip('v').split(' ')[0]
     except:
         version_local = "0.0"
-    if float(version_remote) <= float(version_local):
-        return False, version_remote
-    return True, version_remote
+    if check_version_code(version_remote, version_local):
+        return True, version_remote
+    return False, version_remote
 
 
 def main_operation():
