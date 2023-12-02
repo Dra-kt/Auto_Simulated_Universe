@@ -10,6 +10,19 @@ from gui.goRun import startConfig
 
 
 def choose_view(page: Page):
+    def show_angle_dlg(_):
+        # 开始校准前展示校准说明
+        dlg = ft.AlertDialog(
+            modal=True,
+            title=ft.Text('开始校准'),
+            content=ft.Text('请先传送到黑塔办公室，然后点击“开始校准”\n校准期间请不要操作游戏'),
+            actions=[
+                ft.TextButton('开始校准', on_click=lambda e: (close_dlg(page), angle(e))),
+                ft.TextButton('取消', on_click=lambda _: close_dlg(page))
+            ]
+        )
+        open_dlg(page, dlg)
+
     def angle(_e):
         show_snack_bar(page, "开始校准，请切换回游戏（¬､¬）", ft.colors.GREEN)
         res = run(align_angle)
@@ -86,7 +99,7 @@ def choose_view(page: Page):
                                 ],
                                 alignment=ft.MainAxisAlignment.SPACE_AROUND,
                             ),
-                            on_click=angle,
+                            on_click=show_angle_dlg,
                             width=120,
                         ),
                         ft.ElevatedButton(
