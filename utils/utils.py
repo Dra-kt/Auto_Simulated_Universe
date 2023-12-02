@@ -64,7 +64,7 @@ def set_forground():
         if getattr(sys, 'frozen', False):
             shell.SendKeys(" ")  # Undocks my focus from Python IDLE
         else:
-            shell.SendKeys("")
+            shell.SendKeys("%")
         game_nd = win32gui.FindWindow("UnityWndClass", "崩坏：星穹铁道")
         win32gui.SetForegroundWindow(game_nd)
     except:
