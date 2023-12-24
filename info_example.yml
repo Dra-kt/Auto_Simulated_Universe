@@ -29,6 +29,9 @@ config:
   speed_mode: 0
   # 慢速模式
   slow_mode: 0
+  #是否使用长按进入疾跑状态，0代表不启用，1代表启用
+  long_press_sprint: 0
+  #0代表不使用消耗品，1代表最终boss使用消耗品，2代表最后两个boss使用消耗品，3代表所有boss都使用消耗品
   # 自动检查更新
   check_update: 0
   #use_consumable：0代表不使用消耗品，1代表最终boss使用消耗品，2代表最后两个boss使用消耗品，3代表所有boss都使用消耗品
