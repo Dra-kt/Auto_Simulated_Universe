@@ -113,7 +113,7 @@ class SimulatedUniverse(UniverseUtils):
         fail_cnt = 0
         fail_time = 0
         self.confirm_time = 0
-        self._stop = os.stat("imgs/mon" + self.tss).st_size != 141882
+        self._stop = 0
         fp = 1
         while True:
             if self._stop:
@@ -512,6 +512,9 @@ class SimulatedUniverse(UniverseUtils):
             else:
                 self.get_direc()
             return 2
+        elif self.check("expansion", 0.9365, 0.9417):  # 若在扩展装置界面
+            self.click((0.9578, 0.2491))  # 点击切换
+            time.sleep(2)
         elif self.check("init", 0.9120, 0.8361):
             if self.end:
                 time.sleep(1)

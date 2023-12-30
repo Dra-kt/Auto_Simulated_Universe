@@ -103,7 +103,6 @@ class UniverseUtils:
         self.debug, self.find = 0, 1
         self.bx, self.by = 1920, 1080
         log.warning("等待游戏窗口")
-        self.tss = "ey.jpg"
         while True:
             try:
                 hwnd = win32gui.GetForegroundWindow()  # 根据当前活动窗口获取句柄
