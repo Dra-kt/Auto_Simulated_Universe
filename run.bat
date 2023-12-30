@@ -10,7 +10,7 @@ cd/d "%~dp0"
 
 :as_admin
 set CURR_PATH=%~dp0
-set VENV_PATH=%CURR_PATH%venv
+set VENV_PATH=%CURR_PATH%venv\
 set LOCAL_PYTHON=%VENV_PATH%Scripts\
 
 "%LOCAL_PYTHON%python.exe" "%CURR_PATH%states.py" ^
