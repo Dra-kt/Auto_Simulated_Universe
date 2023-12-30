@@ -35,7 +35,7 @@ def get_info_mode(d):
 
 
 def update_handle(_):  # 运行更新程序
-    os.system(os.path.join(os.getcwd(), "update.bat"))
+    os.system(f'{os.path.join(os.getcwd(), "venv", "Scripts", "python.exe")} {os.path.join(os.getcwd(), "update.py")}')
     exit(0)
 
 
