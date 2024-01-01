@@ -92,6 +92,7 @@ class UniverseUtils:
         self.slow = 0
         self.init_ang = 0
         self.allow_e = 1
+        self.ruanmei = config.ruanmei
         self.img_map = dict()
         # 用户选择的命途
         for i in range(len(config.fates)):
@@ -174,8 +175,8 @@ class UniverseUtils:
     def press(self, c, t=0):
         if c not in "3r":
             log.debug(f"按下按钮 {c}，等待 {t} 秒后释放")
-        # if c=='e' and self.allow_e==0:
-        #     return
+        if c=='e' and self.allow_e==0:
+            return
         if self.slow and c=='shift':
             return
         if self._stop == 0:
@@ -1356,7 +1357,7 @@ class UniverseUtils:
                     if self.mini_state==1 and self.floor in [3, 7, 12]:
                         keyops.keyUp("w")
                         # 如果不允许使用秘技或阮梅不在1号位
-                        if not self.allow_e or not self.check("ruan", 0.0625, 0.7065):
+                        if not self.ruanmei or not self.check("ruan", 0.0625, 0.7065):
                             # 角色逐一使用秘技
                             for i in range([3, 7, 12].index(self.floor)+2):
                                 self.press(str(i+1))

@@ -65,7 +65,6 @@ def startConfig(page: Page):
             gui=1,
             shutdown=shutdown,
             nums=nums,
-            ruanmei=config.ruanmei
         )
         startRun()
 
