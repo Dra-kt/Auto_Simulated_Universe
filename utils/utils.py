@@ -1423,6 +1423,7 @@ class UniverseUtils:
 
     def solve_snack(self):
         if not config.use_snack:
+            self.allow_e = 0
             time.sleep(0.2)
             self.press('esc')
             return
