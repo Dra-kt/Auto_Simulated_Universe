@@ -53,6 +53,9 @@ def config_view(page: Page):
         config.ruanmei = not config.ruanmei
         close_dlg(page)
 
+    def snack_checkbox_changed(_e):
+        config.use_snack = not config.use_snack
+
     def difficult_changed(e: ControlEvent):
         config.difficult = e.data
 
@@ -239,10 +242,18 @@ def config_view(page: Page):
                                         ),
                                     ]
                                 ),
+                                ft.Container(height=10),
                                 ft.Switch(
                                     label="阮梅秘技",
                                     value=get_info_mode(config.ruanmei),
                                     on_change=ruanmei_checkbox_changed,
+                                    label_position=ft.LabelPosition.LEFT,
+                                    scale=1.2
+                                ),
+                                ft.Switch(
+                                    label="使用零食",
+                                    value=get_info_mode(config.use_snack),
+                                    on_change=snack_checkbox_changed,
                                     label_position=ft.LabelPosition.LEFT,
                                     scale=1.2
                                 ),

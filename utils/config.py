@@ -27,6 +27,7 @@ class Config:
         self.bonus = 0
         self.check_update = 0
         self.ruanmei = 0
+        self.use_snack = 1  # 使用零食
         self.timezones = ['America', 'Asia', 'Europe', 'Default']
         self.timezone = 'Default'
         self.origin_key = ['f','m','shift','v','e','w','a','s','d','1','2','3','4']
@@ -70,6 +71,7 @@ class Config:
                     self.slow_mode = config['slow_mode']
                     self.check_update = config['check_update']
                     self.ruanmei = config['ruanmei']
+                    self.use_snack = config['use_snack']
                 except:
                     pass
             with open(os.path.join(self.abspath, self.text), "r", encoding="utf-8", errors='ignore') as f:
@@ -140,6 +142,7 @@ class Config:
                     "slow_mode": self.slow_mode,
                     "check_update": self.check_update,
                     "ruanmei": self.ruanmei,
+                    "use_snack": self.use_snack,
                     "timezone": self.timezone
                 },
                 "prior": prior,

@@ -1422,6 +1422,10 @@ class UniverseUtils:
             pyautogui.click()
 
     def solve_snack(self):
+        if not config.use_snack:
+            time.sleep(0.2)
+            self.press('esc')
+            return
         self.get_screen()
         # 有奇巧零食，吃零食，否则接下来不使用秘技
         if self.check('snack', 0.3844,0.5065, mask='mask_snack'):
