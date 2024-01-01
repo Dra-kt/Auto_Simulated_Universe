@@ -174,8 +174,8 @@ class UniverseUtils:
     def press(self, c, t=0):
         if c not in "3r":
             log.debug(f"按下按钮 {c}，等待 {t} 秒后释放")
-        if c=='e' and self.allow_e==0:
-            return
+        # if c=='e' and self.allow_e==0:
+        #     return
         if self.slow and c=='shift':
             return
         if self._stop == 0:
@@ -1355,14 +1355,16 @@ class UniverseUtils:
                     time.sleep(1.7+self.slow*1.1)
                     if self.mini_state==1 and self.floor in [3, 7, 12]:
                         keyops.keyUp("w")
-                        if not self.check("ruan",0.0625,0.7065):
+                        # 如果不允许使用秘技或阮梅不在1号位
+                        if not self.allow_e or not self.check("ruan", 0.0625, 0.7065):
+                            # 角色逐一使用秘技
                             for i in range([3, 7, 12].index(self.floor)+2):
                                 self.press(str(i+1))
                                 time.sleep(0.4)
                                 self.press('e')
                                 time.sleep(1.5)
                                 self.get_screen()
-                                if self.check('e',0.4995,0.7500):
+                                if self.check('e', 0.4995, 0.7500):  # 没有秘技点，吃零食
                                     self.solve_snack()
                                 self.get_screen()
                                 if not self.check("z",0.5906,0.9537,mask="mask_z",threshold=0.95):
@@ -1420,6 +1422,7 @@ class UniverseUtils:
 
     def solve_snack(self):
         self.get_screen()
+        # 有奇巧零食，吃零食，否则接下来不使用秘技
         if self.check('snack', 0.3844,0.5065, mask='mask_snack'):
             self.click((self.tx,self.ty))
             time.sleep(0.3)

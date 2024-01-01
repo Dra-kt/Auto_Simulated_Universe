@@ -28,7 +28,7 @@ version = "v7.6.2"
 class SimulatedUniverse(UniverseUtils):
     def __init__(
             self, find, debug, show_map, speed, consumable, slow, nums=10000, unlock=False, bonus=False, update=0,
-            gui=0, shutdown=False
+            gui=0, shutdown=False, ruanmei=False
     ):
         super().__init__()
         # t1 = threading.Thread(target=os.system,kwargs={'command':'notif.exe > NUL 2>&1'})
@@ -62,7 +62,9 @@ class SimulatedUniverse(UniverseUtils):
         self.fail_count = 0
         self.nums = nums
         self.end = 0
-        self.shutdown = shutdown
+        self.shutdown = shutdown  # 是否自动关机
+        self.ruanmei = ruanmei  # 阮梅是否使用秘技
+        self.allow_e = ruanmei
         ex_notif = ""
         if not debug:
             pyautogui.FAILSAFE = False
@@ -507,11 +509,14 @@ class SimulatedUniverse(UniverseUtils):
             if self.multi == 1.01:
                 align_angle(0, 1, [1], self)
             self.get_screen()
-            if self.floor > 0 and self.check("ruan",0.0625,0.7065) and not self.check("U", 0.0240,0.7759):
+            # 若允许使用秘技，阮梅处于一号位且队伍不存在状态效果（没有状态效果窗口）
+            if (self.allow_e and self.floor > 0 and
+                    self.check("ruan", 0.0625, 0.7065) and
+                    not self.check("U", 0.0240, 0.7759)):
                 self.press('e')
                 time.sleep(1.5)
                 self.get_screen()
-                if self.check('e',0.4995,0.7500):
+                if self.check('e', 0.4995, 0.7500):  # 检查是否弹出零食界面
                     self.solve_snack()
             # 寻路
             if self.mini_state:
@@ -519,9 +524,8 @@ class SimulatedUniverse(UniverseUtils):
             else:
                 self.get_direc()
             return 2
-        elif self.check('e',0.4995,0.7500):
+        elif self.check('e', 0.4995, 0.7500):  # 如果没有秘技点，弹出零食提示，处理吃零食
             self.solve_snack()
-        elif self.check("init", 0.9120,0.8361):
         elif self.check("expansion", 0.9365, 0.9417):  # 若在扩展装置界面
             self.click((0.9578, 0.2491))  # 点击切换
             time.sleep(2)
@@ -550,7 +554,7 @@ class SimulatedUniverse(UniverseUtils):
             self.floor_init = 1
         elif self.check("start", 0.6594, 0.8389):
             self.fail_count = 0
-            self.allow_e = 1
+            self.allow_e = self.ruanmei
             if self.check("team4", 0.5797, 0.2389):
                 dx = 0.9266 - 0.8552
                 dy = 0.8194 - 0.6741
@@ -944,7 +948,7 @@ class SimulatedUniverse(UniverseUtils):
 
 
 def main():
-    global speed, consumable, slow, bonus, nums, update, shutdown
+    global speed, consumable, slow, bonus, nums, update, shutdown, ruanmei
     if speed == -1:
         speed = config.speed_mode
     if consumable == -1:
@@ -953,7 +957,7 @@ def main():
         slow = config.slow_mode
     log.info(f"find: {find}, debug: {debug}, show_map: {show_map}, consumable: {consumable}")
     su = SimulatedUniverse(find, debug, show_map, speed, consumable, slow, nums=nums, bonus=bool(bonus), update=update,
-                           shutdown=bool(shutdown))
+                           shutdown=bool(shutdown), ruanmei=bool(ruanmei))
     try:
         su.start()
     except ValueError as e:
@@ -977,7 +981,8 @@ if __name__ == "__main__":
         slow = -1
         bonus = 0
         nums = 10000
-        shutdown = 0
+        shutdown = 0,
+        ruanmei = 0,
         for i in sys.argv[1:]:
             st = i.split("-")[-1]
             if "=" not in st:

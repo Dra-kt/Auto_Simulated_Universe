@@ -1,7 +1,7 @@
 from flet_core import MainAxisAlignment, ControlEvent, CrossAxisAlignment, TextStyle
 import flet as ft
 
-from gui.common import show_snack_bar, Page, check_update, get_info_mode
+from gui.common import show_snack_bar, Page, check_update, get_info_mode, open_dlg, close_dlg
 from utils.config import config
 import os
 
@@ -31,6 +31,27 @@ def config_view(page: Page):
 
     def update_checkbox_changed(_e):  # 是否自动检查更新
         config.check_update = not config.check_update
+
+    def ruanmei_checkbox_changed(_e):
+        # 启用选项时弹出提示
+        if not config.ruanmei:
+            dlg = ft.AlertDialog(
+                modal=True,
+                title=ft.Text("注意"),
+                content=ft.Text("此功能仅当阮梅位于1号位时生效，"
+                                "且此功能会消耗奇巧零食，"
+                                "启用后会自动使用阮梅秘技", weight=ft.FontWeight.W_600),
+                actions=[
+                    ft.TextButton("确定", on_click=lambda _: _change_ruanmei_value())
+                ]
+            )
+            open_dlg(page, dlg)
+        else:
+            config.ruanmei = not config.ruanmei
+
+    def _change_ruanmei_value():
+        config.ruanmei = not config.ruanmei
+        close_dlg(page)
 
     def difficult_changed(e: ControlEvent):
         config.difficult = e.data
@@ -217,6 +238,13 @@ def config_view(page: Page):
                                             on_change=timezone_changed,
                                         ),
                                     ]
+                                ),
+                                ft.Switch(
+                                    label="阮梅秘技",
+                                    value=get_info_mode(config.ruanmei),
+                                    on_change=ruanmei_checkbox_changed,
+                                    label_position=ft.LabelPosition.LEFT,
+                                    scale=1.2
                                 ),
                                 ft.Container(height=20),
                                 ft.Row(
