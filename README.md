@@ -1,6 +1,8 @@
 # Auto_Simulated_Universe
 星穹铁道-模拟宇宙全自动化
 
+Fork自[CHNZYX/Auto_Simulated_Universe](https://github.com/CHNZYX/Auto_Simulated_Universe)
+
 ----------------------------------------------------------------------------------------------
 
 ## 免责声明
@@ -108,6 +110,8 @@ python align_angle.py
 
 在设置中选择自己想要的难度和命途，配队请在游戏中预先选择默认配队
 
+在命途选择界面设置好要禁用的命途
+
 最好在一号位选远程角色（艾丝妲、三月七等）方便开怪。
 
 **运行自动化**
@@ -154,7 +158,7 @@ F8/‘停止’按钮停止运行。
 
 每队的配队信息为四个数字
 
-![配队编号](https://github.com/CHNZYX/Auto_Simulated_Universe/blob/main/imgs/team.jpg)
+![配队编号](https://github.com/Dra-kt/Auto_Simulated_Universe/blob/dra/imgs/team.jpg)
 
 比如说这张图中，你想选择娜塔莎，景元，希儿，彦卿，那么请在配队中输入：`6 4 3 2`
 
