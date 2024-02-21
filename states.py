@@ -518,6 +518,8 @@ class SimulatedUniverse(UniverseUtils):
                 self.get_screen()
                 if self.check('e', 0.4995, 0.7500):  # 检查是否弹出零食界面
                     self.solve_snack()
+                    if self.allow_e:
+                        self.press('e')
             # 寻路
             if self.mini_state:
                 self.get_direc_only_minimap()

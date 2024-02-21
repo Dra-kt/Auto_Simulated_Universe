@@ -1356,10 +1356,10 @@ class UniverseUtils:
                     time.sleep(1.7+self.slow*1.1)
                     if self.mini_state==1 and self.floor in [3, 7, 12]:
                         keyops.keyUp("w")
-                        # 如果不允许使用秘技或阮梅不在1号位
+                        # 如果不允许使用阮梅秘技或阮梅不在1号位且没有秘技效果
                         if not self.ruanmei or (
-                                not self.check("ruan", 0.0625, 0.7065, threshold=0.95) and not self.check("U", 0.0240,
-                                                                                                          0.7759)):
+                                not self.check("ruan", 0.0625, 0.7065, threshold=0.95) and
+                                not self.check("U", 0.0240, 0.7759)):
                             # 角色逐一使用秘技
                             for i in range([3, 7, 12].index(self.floor) + 2):
                                 self.press(str(i + 1))
@@ -1369,6 +1369,8 @@ class UniverseUtils:
                                 self.get_screen()
                                 if self.check('e', 0.4995, 0.7500):  # 没有秘技点，吃零食
                                     self.solve_snack()
+                                    if self.allow_e:
+                                        self.press('e')
                                 self.get_screen()
                                 if not self.check("z",0.5906,0.9537,mask="mask_z",threshold=0.95):
                                     break
