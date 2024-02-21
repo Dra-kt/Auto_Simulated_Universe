@@ -27,8 +27,8 @@ def startConfig(page: Page):
 
     def go_dep(e=None):
         dlg1 = ft.AlertDialog(
-            title=ft.Text("异常退出"),
-            content=ft.Text(" "),  # "请确认python+numpy已安装并正确配置环境变量")
+            title=ft.Text("运行时间过短"),
+            content=ft.Text("若非手动停止，请确认是否正确安装"),  # "请确认python+numpy已安装并正确配置环境变量")
         )
         open_dlg(page, dlg1)
 
@@ -39,7 +39,6 @@ def startConfig(page: Page):
         txt = " "
         if time.time() - tm < 20:
             go_dep()
-            # txt = "请确认python+numpy已安装并正确配置环境变量"
         try:
             win32gui.SetForegroundWindow(page.su.my_nd)
         except:
