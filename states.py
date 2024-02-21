@@ -5,7 +5,7 @@ import pyautogui
 import cv2 as cv
 import numpy as np
 import time
-import win32gui, win32api, win32con
+import win32gui
 import random
 import sys
 from copy import deepcopy
@@ -22,7 +22,7 @@ import pyuac
 import utils.keyops as keyops
 
 # 版本号
-version = "v7.9"
+version = "v7.10"
 
 
 class SimulatedUniverse(UniverseUtils):
@@ -227,7 +227,7 @@ class SimulatedUniverse(UniverseUtils):
         if self.check("c", 0.9464, 0.1287, threshold=0.985) or self.check(
                 "auto_2", 0.0583, 0.0769):
             # 需要打开自动战斗
-            if self.check("c", 0.9464, 0.1287, threshold=0.985):
+            if self.check("auto", 0.0833, 0.9574, threshold=0.95):
                 self.press("v")
             if time.time() - self.f_time < 20:
                 self.f_time = 0
