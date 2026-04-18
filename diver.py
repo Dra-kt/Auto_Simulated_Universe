@@ -1,31 +1,30 @@
-import threading
-import traceback
-import keyboard
-import pyautogui
-import cv2 as cv
-import numpy as np
-import time
-import win32gui, win32api, win32con
-import random
+import bisect
+import csv
+import datetime
 import json
-import sys
-from copy import deepcopy
+import os
+import time
+import traceback
+from collections import defaultdict
+
+import cv2 as cv
+import keyboard
+import numpy as np
+import pyautogui
+import pytz
+import pyuac
+import win32api
+import win32con
+import win32gui
+
+import utils.diver.keyops as keyops
+from utils.diver.args import args
+from utils.diver.config import config
+from utils.diver.keyops import KeyController
+from utils.diver.utils import UniverseUtils, set_forground, notif
 from utils.log import log, set_debug
 from utils.log import my_print as print
 from utils.log import print_exc
-from utils.diver.args import args
-from utils.diver.utils import UniverseUtils, set_forground, notif
-import os
-from align_angle import main as align_angle
-from utils.diver.config import config
-import datetime
-import csv
-import pytz
-import pyuac
-import utils.diver.keyops as keyops
-from utils.diver.keyops import KeyController
-import bisect
-from collections import defaultdict
 
 # 版本号
 version = "v8.042"
@@ -462,16 +461,20 @@ class DivergentUniverse(UniverseUtils):
                     time.sleep(1)
                     return 1
                 # 其他规则
-                f_message = self.check_f()
-                if f_message is not None and \
-                        (f_message == '造物调试台' or '超级排排乐' in f_message):
-                    # 脱离卡死
-                    self.press('d', 0.2)
-                    time.sleep(0.2)
-                    self.press('w', 0.5)
-                    time.sleep(0.2)
-                    self.press('a', 0.2)
-                    time.sleep(0.2)
+                f_message = self.check_f(['战利品', '调试台', '排排乐'])
+                if f_message is not None:
+                    # 事件有时候也有战利品
+                    if '战利品' in f_message:
+                        self.press('f')
+                        self.check_pop()
+                    else:
+                        # 脱离卡死
+                        self.press('d', 0.2)
+                        time.sleep(0.2)
+                        self.press('w', 0.5)
+                        time.sleep(0.2)
+                        self.press('a', 0.2)
+                        time.sleep(0.2)
                 # 继续走
                 tm += 0.7
                 keyops.keyDown('w')
@@ -851,9 +854,9 @@ class DivergentUniverse(UniverseUtils):
             self.close_and_exit(to_exit=False)
             return 1
 
-        event_scene = ['事件', '奖励', '遭遇', '异常', '铸造', '财富', '奇遇']
+        event_scene = ['事件', '奖励', '遭遇', '异常', '铸造', '奇遇']
         if area_now in ['休整', '商店', '空白']:
-            self.position_reloaded = 1  # 不战术退出
+            self.position_reloaded = max(1, self.position_reloaded)  # 不战术退出
             self.portal_opening_days('可以直接走的区域')
             return
         if (self.state_inited and self.position_reloaded < self.max_position_reload and
@@ -964,6 +967,7 @@ class DivergentUniverse(UniverseUtils):
             self.state_inited = True
             if self.area_state == 0:
                 keyops.keyDown('w')
+                total_events = None
 
                 for i in range(5):
                     self.get_screen()
@@ -1136,19 +1140,14 @@ class DivergentUniverse(UniverseUtils):
                 return
 
         elif area_now == '财富':
-            keyops.keyDown('w')
-            time.sleep(0.8)
-            # self.press('a', 0.5)
-            # keyops.keyUp('w')
-            # pyautogui.click()
-            # self.check_pop()
-            # time.sleep(0.7)
-            self.forward_until(text_list=['战利品', '药箱'], timeout=3, moving=0)
-            # if not res:
-            #     pyautogui.click()
-            #     self.check_pop()
-            #     time.sleep(0.3)
-            #     self.forward_until(text_list=['战利品', '药箱'], timeout=1.0, moving=0)
+            res = self.forward_until(text_list=['战利品', '药箱'], timeout=3, moving=0)
+            if res:
+                pyautogui.click()
+                self.check_pop()
+                res = self.forward_until(text_list=['战利品', '药箱'], timeout=1, moving=0)
+                if res:
+                    pyautogui.click()
+                    self.check_pop()
             self.portal_opening_days('财富房间')
             return
 
