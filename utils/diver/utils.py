@@ -708,15 +708,14 @@ class UniverseUtils:
             if not check_text:
                 return 1
             text = self.ts.ocr_one_row(self.screen, [1206, 1437, 587, 635])
-            print(text)
             if len(text):
-                log.info('识别到交互信息：'+text)
+                log.info('识别到交互信息：' + text)
+                if len(is_in) == 0:
+                    return text
                 for i in is_in:
                     if i in text:
-                        return 1
-            return 0
-        else:
-            return None
+                        return text
+        return None
 
     def get_tar(self):
         # 寻找最近的目标点
