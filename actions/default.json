@@ -45,7 +45,9 @@
         "actions": [
             {
                 "position": [475, 483]
-            },{
+            },
+            "click_new",
+            {
                 "position": [953, 969]
             },{
                 "sleep": 1
@@ -311,8 +313,7 @@
             },
             {
                 "sleep": "2"
-            },
-            "close_and_exit"
+            }
         ]
     },
     {

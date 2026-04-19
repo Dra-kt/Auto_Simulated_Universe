@@ -422,8 +422,12 @@ class UniverseUtils:
         if max_val > threshold:
             x, y = max_loc
             self.click_position((x + target.shape[1]//2, y + target.shape[0]//2))
+            log.info(f"点击new: {x}, sub: {y}")
             return 1
         return 0
+
+    def click_new(self):
+        return self.click_img('new')
     
     def check_box(self, path, box=[0,1920,0,1080], threshold=0.96):
         path = self.format_path(path)
